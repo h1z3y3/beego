@@ -45,7 +45,7 @@ func (builder *otelFilterChainBuilder) FilterChain(next httplib.Filter) httplib.
 	return func(ctx context.Context, req *httplib.BeegoHTTPRequest) (*http.Response, error) {
 		method := req.GetRequest().Method
 
-		operationName := method + "#" + req.GetRequest().URL.String()
+		operationName := method + "#" + req.GetRequest().URL.Path
 		spanCtx, span := otel.Tracer("beego").Start(ctx, operationName)
 		defer span.End()
 
